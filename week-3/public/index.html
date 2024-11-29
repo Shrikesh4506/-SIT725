@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoe Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .brand-text {
+            font-size: 2rem;
+            margin: 2rem 0;
+            font-weight: 300;
+        }
+        .shoe-title {
+            font-size: 1.5rem;
+            padding: 1rem 0;
+            font-weight: 500;
+        }
+        .description-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            padding: 2rem;
+        }
+        .form-title {
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="teal">
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo left">
+                <i class="material-icons">shopping_bag</i>
+                ShoeStore
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="center-align brand-text">Welcome to ShoeStore</h2>
+        <div class="card-panel teal lighten-4">
+            <p class="description-text center-align">
+                Discover our collection of premium footwear for every occasion. 
+                We pride ourselves in offering comfortable and stylish shoes 
+                at competitive prices.
+            </p>
+        </div>
+    </div>
+
+
+    <div class="container section">
+        <div class="row">
+            <div class="col s12 m4">
+                <div class="card">
+                    <div class="card-image">
+                      <img src="images/Casual_shoe.jpg" alt="Casual Shoes">
+                    </div>
+                    <div class="card-content center-align">
+                        <h3 class="shoe-title">Casual Collection</h3>
+                        <p>Perfect for everyday comfort</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4">
+                <div class="card">
+                    <div class="card-image">
+                      <img src="images/Sport_shoe.jpg" alt="Sport Shoes">
+                    </div>
+                    <div class="card-content center-align">
+                        <h3 class="shoe-title">Sports Collection</h3>
+                        <p>Designed for peak performance</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4">
+                <div class="card">
+                    <div class="card-image">
+                      <img src="images/Formal_Shoe.jpg" alt="Formal Shoes">
+                    </div>
+                    <div class="card-content center-align">
+                        <h3 class="shoe-title">Formal Collection</h3>
+                        <p>Elegance in every step</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container section">
+        <div class="row">
+            <form class="col s12" id="feedbackForm">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="center-align form-title">Share Your Feedback</h4>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="name" type="text" class="validate" required>
+                                <label for="name">Your Name</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">email</i>
+                                <input id="email" type="email" class="validate" required>
+                                <label for="email">Your Email</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">message</i>
+                                <textarea id="feedback" class="materialize-textarea" required></textarea>
+                                <label for="feedback">Your Feedback</label>
+                            </div>
+                            <div class="center-align">
+                                <button class="btn waves-effect waves-light teal" type="submit">
+                                    Submit Feedback
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <footer class="page-footer teal">
+    </footer>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+              document.addEventListener('DOMContentLoaded', function() {
+            var modalElement = document.querySelector('#successModal');
+            var modalInstance = M.Modal.init(modalElement);
+
+
+            var form = document.getElementById('feedbackForm');
+            function displayAllFeedbacks() {
+                const feedbacks = JSON.parse(localStorage.getItem('feedbacks')) || [];
+                console.group('📝 Stored Feedbacks');
+                console.table(feedbacks);
+                console.log('Total submissions:', feedbacks.length);
+                console.groupEnd();
+            }
+
+            displayAllFeedbacks();
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var name = document.getElementById('name').value;
+                var email = document.getElementById('email').value;
+                var feedback = document.getElementById('feedback').value;
+                var feedbackData = {
+                    id: Date.now(),
+                    name: name,
+                    email: email,
+                    feedback: feedback,
+                    date: new Date().toISOString()
+                };
+
+
+                var feedbacks = [];
+                if (localStorage.getItem('feedbacks')) {
+                    feedbacks = JSON.parse(localStorage.getItem('feedbacks'));
+                }
+                feedbacks.push(feedbackData);
+                localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+                console.group('✨ New Feedback Submitted');
+                console.log('Name:', name);
+                console.log('Email:', email);
+                console.log('Feedback:', feedback);
+                console.log('Submission Time:', new Date().toLocaleString());
+                console.groupEnd();
+                displayAllFeedbacks();
+                modalInstance.open();
+                form.reset();
+            });
+        });
+    </script>
+
+    <div id="successModal" class="modal">
+      <div class="modal-content center-align">
+          <h4><i class="material-icons large teal-text">check_circle</i></h4>
+          <h4>Thank You!</h4>
+          <p>Your feedback has been submitted successfully.</p>
+      </div>
+      <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect waves-teal btn-flat">Close</a>
+      </div>
+    </div>
+</body>
+</html>
