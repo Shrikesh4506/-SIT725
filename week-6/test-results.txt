@@ -1,0 +1,18 @@
+
+
+2024-12-19T00:24:45.228Z: Database Connection: Success
+2024-12-19T00:24:45.242Z: Total Feedbacks Found: 2
+
+FEEDBACK DETAILS:
+
+Feedback 1:
+Name: shri
+Email: shri@gmail.com
+Message: nice shoe collections
+
+Feedback 2:
+Name: madhu
+Email: madhu@gmail.com
+Message: good shoes
+2024-12-19T00:24:45.249Z: Test Session Completed
+
