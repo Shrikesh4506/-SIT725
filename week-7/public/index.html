@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShoeStore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo left"><i class="material-icons">shopping_bag</i>ShoeStore</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 id="welcome-to-shoestore" class="center-align brand-text">Welcome to ShoeStore</h2>
+        
+        <div class="card-panel teal lighten-4">
+            EveryFeedBack is Valued.
+        </div>
+    </div>
+
+    <div class="container section">
+        <div class="row">
+
+        </div>
+    </div>
+
+    <div class="container section">
+        <div class="row">
+            <div class="card">
+                <div class="card-content">
+                    <h4 id="share-your-feedback" class="center-align form-title">Share Your Feedback</h4>
+                    <form id="feedbackForm">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="name" type="text" required>
+                                <label for="name">Your Name</label>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">email</i>
+                                <input id="email" type="email" required>
+                                <label for="email">Your Email</label>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">message</i>
+                                <textarea id="feedback" class="materialize-textarea" required></textarea>
+                                <label for="feedback">Your Feedback</label>
+                            </div>
+
+                            <div class="center-align">
+                                <button class="btn waves-effect waves-light" type="submit">
+                                    Submit Feedback
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="successModal" class="modal">
+        <div class="modal-content center-align">
+            <i class="material-icons large green-text">check_circle</i>
+            <h4>Thank You!</h4>
+            <p>Your feedback has been submitted successfully.</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-teal btn-flat">Close</a>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
