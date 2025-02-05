@@ -4,8 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "mocha test/test.js --exit"
+    "test": "SET NODE_ENV=test && mocha tests/**/*.js --timeout 10000 --exit",
+    "test:unit": "SET NODE_ENV=test && mocha tests/unit.js --exit",
+    "test:integration": "SET NODE_ENV=test && mocha tests/integration.js --exit",
+    "test:e2e": "SET NODE_ENV=test && mocha tests/e2e.js --exit"
   },
   "author": "",
   "license": "ISC",
@@ -14,7 +16,10 @@
     "mongodb": "^6.3.0"
   },
   "devDependencies": {
-    "chai": "^4.3.7",
-    "mocha": "^10.8.2"
+    "chai": "^4.5.0",
+    "jsdom": "^22.1.0",
+    "mocha": "^10.8.2",
+    "sinon": "^19.0.2",
+    "supertest": "^7.0.0"
   }
 }

@@ -1,45 +1,40 @@
+// server.js
 const express = require('express');
 const { MongoClient } = require('mongodb');
+const feedbackRoutes = require('./routes/feedbackRoutes');
 
-const app = express();
+function createServer() {
+    const app = express();
+    app.use(express.json());
+    app.use(express.static('public'));
 
-app.use(express.json());
-app.use(express.static('public'));
+    // Database connection
+    const url = 'mongodb://localhost:27017';
+    const dbName = process.env.NODE_ENV === 'test' ? 'feedback_test' : 'feedback';
 
-const url = 'mongodb://localhost:27017';
-const dbName = 'feedback';  
-let db;
+    MongoClient.connect(url)
+        .then(client => {
+            console.log('Connected to MongoDB successfully');
+            global.db = client.db(dbName);
+            console.log('Database selected:', dbName);
+        })
+        .catch(err => console.error('MongoDB connection error:', err));
 
-MongoClient.connect(url)
-    .then(client => {
-        console.log('Connected to MongoDB successfully');
-        db = client.db(dbName);
-        console.log('Database selected:', dbName);
-    })
-    .catch(err => console.error('MongoDB connection error:', err));
+    // Routes
+    app.use('/api', feedbackRoutes);
 
-app.post('/api/feedback', async (req, res) => {
-    try {
-        console.log('Received feedback data:', req.body);
-        
-        if (!db) {
-            console.error('Database not connected');
-            return res.status(500).json({ statusCode: 500, message: 'Database not connected' });
-        }
+    return app;
+}
 
-        const feedbackCollection = db.collection('feedbacks');  
-        const result = await feedbackCollection.insertOne(req.body);
-        
-        console.log('Data saved successfully:', result);
-        
-        res.json({ statusCode: 200, message: 'Feedback submitted successfully' });
-    } catch (error) {
-        console.error('Error saving feedback:', error);
-        res.status(500).json({ statusCode: 500, message: 'Error submitting feedback' });
-    }
-});
+// Create the app instance
+const app = createServer();
 
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// Start server only if running directly
+if (require.main === module) {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+module.exports = app;

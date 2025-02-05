@@ -1,5 +1,12 @@
 {
   "dependencies": {
-    "materialize-css": "^1.0.0-rc.2"
+    "body-parser": "^1.20.3",
+    "express": "^4.21.2",
+    "http": "^0.0.1-security",
+    "materialize-css": "^1.0.0-rc.2",
+    "mongodb": "^6.13.0",
+    "mongoose": "^8.9.7",
+    "path": "^0.12.7",
+    "socket.io": "^4.8.1"
   }
 }
