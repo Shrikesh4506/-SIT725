@@ -9,22 +9,32 @@ describe('End-to-End Tests', () => {
     let document;
     let server;
     
-    before((done) => {
+    before(async function() {
         // Load HTML and setup JSDOM
         const html = require('fs').readFileSync('public/index.html', 'utf8');
         dom = new JSDOM(html, {
-            url: 'http://localhost',
+            url: 'http://localhost:3003',
             runScripts: 'dangerously',
             resources: 'usable'
         });
         document = dom.window.document;
         
         // Start test server
-        server = app.listen(3002, done);
+        return new Promise((resolve) => {
+            server = app.listen(3003, () => {
+                console.log('E2E test server started on port 3003');
+                resolve();
+            });
+        });
     });
 
-    after((done) => {
-        server.close(done);
+    after(async function() {
+        return new Promise((resolve) => {
+            server?.close(() => {
+                console.log('E2E test server closed');
+                resolve();
+            });
+        });
     });
 
     describe('Feedback Form', () => {
@@ -42,7 +52,6 @@ describe('End-to-End Tests', () => {
             expect(messageInput).to.exist;
             expect(submitButton).to.exist;
 
-            // Verify required attributes
             expect(nameInput.required).to.be.true;
             expect(emailInput.required).to.be.true;
             expect(messageInput.required).to.be.true;
@@ -55,16 +64,14 @@ describe('End-to-End Tests', () => {
                 message: 'Test message from E2E test'
             };
 
-            // Test the actual API endpoint
             const response = await request(app)
                 .post('/api/feedback')
-                .send(testFeedback)
-                .expect(200);
+                .send(testFeedback);
 
+            expect(response.status).to.equal(200);
             expect(response.body.message).to.equal('Feedback submitted successfully');
         });
 
-        // This test verifies the success modal exists
         it('should have success modal', () => {
             const successModal = document.getElementById('successModal');
             expect(successModal).to.exist;
